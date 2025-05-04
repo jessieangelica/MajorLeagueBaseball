@@ -241,3 +241,105 @@ In March 2006, Major League Baseball (MLB) initiated a drug-testing program to a
 Objective : 
 - Comparing Batting Average (BA) and Home Runs (HR) between 2006 and 2007
 - Evaluating whether the performance changes differ between players named in the Mitchell Report (suspected of doping) and those not named
+
+#### Step 1 : Data Preparation
+- We start by aggregating the batting data to compute season-level statistics for each player
+- Filter data to only include 2006 and 2007:
+- Pivot the dataset so that each row represents a player, and columns represent stats by year
+
+#### Step 2: Feature Engineering
+- Calculate the change in performance metrics
+- Label players based on inclusion in the Mitchell Report
+
+#### Step 3: Exploratory Data Analysis
+- Distribution of Batting Average Change (2007 - 2006)
+- Distribution of Home Run Change (2007 - 2006)
+
+Interpretation
+- The histogram shows the distribution of BA differences (2007 - 2006) for players.
+- Blue distribution: Players named in the Mitchell Report.
+- Orange distribution: Players not named in the report.
+- Both distributions are approximately normal, centered around zero.
+
+Insights
+- The central peak for both groups suggests little to no overall change in batting average.
+- No clear performance decline is observed among players in the Mitchell Report relative to those not in the report.
+- This could indicate that the batting average was less impacted by the drug-testing program or PED usage.
+
+Interpretation
+- The histogram shows the distribution of HR differences (2007 - 2006).
+- Blue = Mitchell Report players; Orange = Non-Mitchell players.
+- The HR_diff distribution has heavier tails and is more skewed, indicating greater variance in HR changes.
+
+Insights
+- hile most players (both groups) hovered near zero change, there are extreme declines and gains present.
+- Players in the Mitchell Report (blue line) show a wider spread, potentially suggesting more fluctuation in performance post-drug testing.
+- This could imply that HR production was more sensitive to the loss of performance-enhancing drugs.
+
+BA_diff
+- Both groups experienced a drop in batting average on average from 2006 to 2007 (negative means).
+- Players in the Mitchell Report had a larger drop on average (-0.0148 vs. -0.0065), though both are relatively small.
+- Standard deviations are quite similar (~0.04), suggesting similar spread.
+- Some players in both groups did improve their batting average (positive max values), but more players saw declines (more negative min and lower medians).
+- The median in both groups is also negative, supporting that most players slightly declined.
+
+HR_diff
+- Both groups, on average, hit fewer home runs in 2007 than in 2006 (mean HR_diff is negative).
+- Players in the Mitchell Report had a slightly larger average decline (-1.62 vs -1.36).
+- However, the standard deviation for the Mitchell group is much larger (11.19 vs. 7.33), suggesting more variability or inconsistency.
+- The range is large for both groups (from losing up to 26 HRs to gaining up to 30 HRs).
+- Medians show the same trend: most players hit fewer HRs, though some did improve (positive 75% and max values).
+
+#### Conclusion :
+The implementation of MLB's drug-testing policy in 2006 did not result in a dramatic change in batting averages. However, home run totals showed more variability, especially among players named in the Mitchell Report. This suggests that power-hitting might have been more reliant on PEDs, and thus more impacted by testing policies.
+
+### Problem 4
+Objective : To compare pitching performance between two distinct eras in Major League Baseball — the Steroid Era (1994–2005) and the Recent Era (2012–2023) — using the WHIP (Walks + Hits per Inning Pitched) metric. 
+- Clean and preprocess pitching data for accurate aggregation.
+- Calculate WHIP for each player per year to quantify pitching efficiency.
+- Analyze and visualize the distribution of WHIP across the two eras.
+- Identify statistical differences in pitcher performance, which may reflect changes in player training, strategy, enforcement of drug policies, or other external factors.
+
+#### Step 1: Data Cleaning and Preprocessing
+- Initial Data Inspection : After loading the dataset, we inspect the structure of the data.
+- Removing Duplicate Records : We eliminate any duplicate rows to ensure data quality
+- Cleaning String Columns : To standardize string-based data, we strip whitespaces and convert text to title case
+
+#### Step 2: Aggregating Player-Year Statistics
+- To focus on yearly performance per player, we aggregate the data
+- We compute innings pitched (IP) from outs recorded (since 1 inning = 3 outs)
+- WHIP is a common pitching metric: WHIP = Walks (BB) + Hits (H) / Innings Pitched (IP)
+- To avoid invalid WHIP values, we remove rows where innings pitched is zero
+
+#### Step 3: Filtering by Baseball Eras
+We define two distinct eras for analysis:
+- Steroid Era: 1994–2005
+- Recent Era: 2012–2023
+
+#### Step 4: Descriptive Statistics
+We compute basic statistical summaries for both eras:
+
+#### Step 5: Final Cleaning Before Visualization
+We ensure WHIP values are numeric and filter out any invalid entries:
+
+#### Step 6: Visualizing WHIP Distributions
+We compare the distribution of WHIP values using Kernel Density Estimation (KDE):
+
+#### Interpretation
+- The WHIP distribution for both eras shows a strong concentration between 1.0 and 2.0, with a sharp peak around 1.3–1.5.
+- The Recent Era (orange line) has a slightly lower peak but is more spread out, indicating more variation in WHIP values compared to the Steroid Era.
+- Despite the visual similarity, the Recent Era's curve shifts slightly to the left, suggesting marginally better average performance (lower WHIP).
+- However, both eras contain a long right tail, showing the presence of pitchers with extremely high WHIP values (outliers), more so in the Recent Era.
+
+#### Conclusion
+- Pitchers in the Recent Era have slightly better WHIP performance than those in the Steroid Era, as reflected in the lower mean and median values.
+- The larger standard deviation in the Recent Era suggests more inconsistency in individual performances — possibly due to increased bullpen usage or evolving pitcher roles.
+- While visual differences in the KDE plot are subtle, the numerical summary confirms a small but noticeable improvement in pitching efficiency over time.
+- The presence of WHIP values above 10 (which are extreme) in both eras may warrant further filtering or investigation, especially if evaluating only qualified pitchers.
+
+
+
+
+
+
+
